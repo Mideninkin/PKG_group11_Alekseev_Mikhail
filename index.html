@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Models Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Color Models Studio</h1>
+            <div class="control-panel">
+                <div class="control-group">
+                    <label>Цвет:</label>
+                    <div class="color-picker-wrapper">
+                        <div id="colorDisplay" class="color-preview"></div>
+                        <input type="color" id="nativePicker" value="#748447">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="illuminantSelect">Освещение:</label>
+                    <select id="illuminantSelect">
+                        <option value="D65">D65 (День)</option>
+                        <option value="D50">D50 (Печать)</option>
+                        <option value="E">E (Равноэнерг.)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="cmykMethodSelect">CMYK Алгоритм:</label>
+                    <select id="cmykMethodSelect">
+                        <option value="GCR">GCR (Замена серого)</option>
+                        <option value="UCR">UCR (Замена в тенях)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="gamutSelect">Выход за охват:</label>
+                    <select id="gamutSelect">
+                        <option value="clipping">Clipping (Срез)</option>
+                        <option value="scaling">Scaling (Сжатие)</option>
+                    </select>
+                </div>
+
+                <button id="runTestsBtn" class="btn-tests">🧪 Запустить Unit-тесты</button>
+            </div>
+        </header>
+
+        <div id="testResultsCard" class="card test-card hidden">
+            <div class="test-header">
+                <h2>Результаты Unit-тестов (Model Layer)</h2>
+                <button id="closeTestsBtn" class="btn-close">✕</button>
+            </div>
+            <div id="testOutput" class="test-output"></div>
+        </div>
+
+        <div id="warningBanner" class="warning-banner hidden">
+            ⚠️ Цвет выходит за пределы охвата sRGB!
+        </div>
+
+        <main class="grid-layout">
+            <div class="card">
+                <h2>RGB</h2>
+                <div class="slider-row">
+                    <span class="label">R</span>
+                    <input type="range" id="sliderR" min="0" max="255" value="116" class="color-slider">
+                    <input type="number" id="numR" min="0" max="255" value="116">
+                </div>
+                <div class="slider-row">
+                    <span class="label">G</span>
+                    <input type="range" id="sliderG" min="0" max="255" value="132" class="color-slider">
+                    <input type="number" id="numG" min="0" max="255" value="132">
+                </div>
+                <div class="slider-row">
+                    <span class="label">B</span>
+                    <input type="range" id="sliderB" min="0" max="255" value="71" class="color-slider">
+                    <input type="number" id="numB" min="0" max="255" value="71">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>LAB</h2>
+                <div class="slider-row">
+                    <span class="label">L*</span>
+                    <input type="range" id="sliderL" min="0" max="100" step="0.1" value="52.6" class="color-slider">
+                    <input type="number" id="numL" min="0" max="100" step="0.1" value="52.6">
+                </div>
+                <div class="slider-row">
+                    <span class="label">a*</span>
+                    <input type="range" id="sliderA" min="-128" max="127" step="0.1" value="-14.5" class="color-slider">
+                    <input type="number" id="numA" min="-128" max="127" step="0.1" value="-14.5">
+                </div>
+                <div class="slider-row">
+                    <span class="label">b*</span>
+                    <input type="range" id="sliderLabB" min="-128" max="127" step="0.1" value="30.9" class="color-slider">
+                    <input type="number" id="numLabB" min="-128" max="127" step="0.1" value="30.9">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>CMYK</h2>
+                <div class="slider-row">
+                    <span class="label">C%</span>
+                    <input type="range" id="sliderC" min="0" max="100" step="0.1" value="12.1" class="color-slider">
+                    <input type="number" id="numC" min="0" max="100" step="0.1" value="12.1">
+                </div>
+                <div class="slider-row">
+                    <span class="label">M%</span>
+                    <input type="range" id="sliderM" min="0" max="100" step="0.1" value="0.0" class="color-slider">
+                    <input type="number" id="numM" min="0" max="100" step="0.1" value="0.0">
+                </div>
+                <div class="slider-row">
+                    <span class="label">Y%</span>
+                    <input type="range" id="sliderY" min="0" max="100" step="0.1" value="46.2" class="color-slider">
+                    <input type="number" id="numY" min="0" max="100" step="0.1" value="46.2">
+                </div>
+                <div class="slider-row">
+                    <span class="label">K%</span>
+                    <input type="range" id="sliderK" min="0" max="100" step="0.1" value="48.2" class="color-slider">
+                    <input type="number" id="numK" min="0" max="100" step="0.1" value="48.2">
+                </div>
+            </div>
+
+            <!-- CIE Graph Card -->
+            <div class="card cie-card">
+                <h2>Цветовой график МКО (CIE 1931)</h2>
+                <div class="canvas-wrapper">
+                    <canvas id="cieCanvas" width="360" height="360"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
