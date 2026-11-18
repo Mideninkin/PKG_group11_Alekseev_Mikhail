@@ -1,12 +1,12 @@
 using System;
 using System.Windows.Forms;
 
-namespace ImageProcessorApp
+namespace Lab4_Raster
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
